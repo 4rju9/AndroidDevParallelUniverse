@@ -17,7 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import app.netlify.dev4rju9.animatedtablayout.AnimatedTabLayout
+import kotlin.collections.listOf
 
 @Preview
 @Composable

@@ -56,7 +56,6 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-    implementation(project(":WheelPicker"))
-    implementation(project(":AnimatedTabLayout"))
-    implementation(project(":RootDetection"))
+    implementation(libs.bundles.parallel.universe)
+
 }

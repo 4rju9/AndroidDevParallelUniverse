@@ -61,7 +61,7 @@ For example:
 
 ```kotlin
 dependencies {
-    implementation("com.github.4rju9.AndroidDevParallelUniverse:wheel-picker:1.0")
+    implementation("com.github.4rju9.AndroidDevParallelUniverse:wheel-picker:1.0.3")
 }
 ```
 
@@ -73,9 +73,9 @@ You only consume the dimension you need. No galactic-scale imports. 🌌
 
 | Dimension | Artifact | Description | Dependency |
 |---|---|---|---|
-| 🛡️ **Security Dimension** | `root-detection` | A multi-layered **C++/Kotlin security fortress** designed to detect rooted environments across multiple defensive layers. | `implementation("com.github.4rju9.AndroidDevParallelUniverse:root-detection:1.0")` |
-| 🎡 **Motion Dimension** | `wheel-picker` | A **Jetpack Compose wheel picker** designed for smooth, frictionless dimensional scrolling. | `implementation("com.github.4rju9.AndroidDevParallelUniverse:wheel-picker:1.0")` |
-| 🌀 **Interface Dimension** | `animated-tab-layout` | A **dynamically calculating, ripple-free tab layout** that adapts its geometry instead of forcing developers to manually negotiate with pixels. | `implementation("com.github.4rju9.AndroidDevParallelUniverse:animated-tab-layout:1.0")` |
+| 🛡️ **Security Dimension** | `root-detection` | A multi-layered **C++/Kotlin security fortress** designed to detect rooted environments across multiple defensive layers. | `implementation("com.github.4rju9.AndroidDevParallelUniverse:root-detection:1.0.3")` |
+| 🎡 **Motion Dimension** | `wheel-picker` | A **Jetpack Compose wheel picker** designed for smooth, frictionless dimensional scrolling. | `implementation("com.github.4rju9.AndroidDevParallelUniverse:wheel-picker:1.0.3")` |
+| 🌀 **Interface Dimension** | `animated-tab-layout` | A **dynamically calculating, ripple-free tab layout** that adapts its geometry instead of forcing developers to manually negotiate with pixels. | `implementation("com.github.4rju9.AndroidDevParallelUniverse:animated-tab-layout:1.0.3")` |
 | 🧬 **Fifth Dimension** | `[Classified]` | **COMING SOON.** A classified component currently rendering somewhere beyond conventional dimensional space. | `// Classified — access denied` |
 
 ---
@@ -92,7 +92,7 @@ Add the dependency:
 
 ```kotlin
 dependencies {
-    implementation("com.github.4rju9.AndroidDevParallelUniverse:root-detection:1.0")
+    implementation("com.github.4rju9.AndroidDevParallelUniverse:root-detection:1.0.3")
 }
 ```
 
@@ -121,7 +121,7 @@ Add the dependency:
 
 ```kotlin
 dependencies {
-    implementation("com.github.4rju9.AndroidDevParallelUniverse:wheel-picker:1.0")
+    implementation("com.github.4rju9.AndroidDevParallelUniverse:wheel-picker:1.0.3")
 }
 ```
 
@@ -137,7 +137,7 @@ Add the dependency:
 
 ```kotlin
 dependencies {
-    implementation("com.github.4rju9.AndroidDevParallelUniverse:animated-tab-layout:1.0")
+    implementation("com.github.4rju9.AndroidDevParallelUniverse:animated-tab-layout:1.0.3")
 }
 ```
 
@@ -219,7 +219,7 @@ represents version `1.0` across the dimensional ecosystem.
 A dependency therefore looks like:
 
 ```kotlin
-implementation("com.github.4rju9.AndroidDevParallelUniverse:<artifact>:1.0")
+implementation("com.github.4rju9.AndroidDevParallelUniverse:<artifact>:1.0.3")
 ```
 
 ### Why Unified Versioning?

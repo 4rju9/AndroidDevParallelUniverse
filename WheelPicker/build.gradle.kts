@@ -17,7 +17,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -26,13 +26,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     publishing {
         singleVariant("release") {
-            // Optional but recommended for open-source libraries:
             withSourcesJar()
             withJavadocJar()
         }
@@ -50,6 +49,6 @@ dependencies {
     implementation(libs.androidx.compose.material3)
 }
 
-version = project.property("WHEEL_PICKER_VERSION").toString()
-extra["ARTIFACT_ID"] = project.property("WHEEL_PICKER").toString()
+version = project.property("ROOT_DETECTION_VERSION").toString()
+extra["ARTIFACT_ID"] = project.property("ROOT_DETECTION").toString()
 apply(from = "${rootProject.projectDir}/publish-module.gradle.kts")

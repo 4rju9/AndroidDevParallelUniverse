@@ -25,3 +25,4 @@ dependencyResolutionManagement {
 rootProject.name = "AndroidDevParallelUniverse"
 include(":app")
 include(":WheelPicker")
+include(":RootDetection")

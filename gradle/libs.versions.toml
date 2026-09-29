@@ -9,7 +9,7 @@ activityCompose = "1.13.0"
 kotlin = "2.0.21"
 composeBom = "2024.10.00"
 annotation = "1.9.1"
-androidDevParallelUniverse = "1.0"
+androidDevParallelUniverse = "1.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

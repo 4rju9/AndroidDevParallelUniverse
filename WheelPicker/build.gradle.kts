@@ -49,6 +49,6 @@ dependencies {
     implementation(libs.androidx.compose.material3)
 }
 
-version = project.property("ROOT_DETECTION_VERSION").toString()
-extra["ARTIFACT_ID"] = project.property("ROOT_DETECTION").toString()
+version = project.property("WHEEL_PICKER_VERSION").toString()
+extra["ARTIFACT_ID"] = project.property("WHEEL_PICKER").toString()
 apply(from = "${rootProject.projectDir}/publish-module.gradle.kts")

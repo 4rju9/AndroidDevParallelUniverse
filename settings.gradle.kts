@@ -26,3 +26,4 @@ rootProject.name = "AndroidDevParallelUniverse"
 include(":app")
 include(":WheelPicker")
 include(":RootDetection")
+include(":AnimatedTabLayout")

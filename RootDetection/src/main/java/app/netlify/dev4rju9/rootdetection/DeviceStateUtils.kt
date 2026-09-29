@@ -463,7 +463,7 @@ object DeviceStateUtils {
 
     @JvmStatic
     @WorkerThread
-    fun isEnvironmentUntrusted(context: Context, content: () -> Unit = {}): Boolean {
+    fun isEnvironmentUntrustedWithContent(context: Context, content: () -> Unit = {}): Boolean {
         val flagged = evaluateWithBudget(context).isFlagged
         if (flagged) debugLog { "Environment is untrusted" }
         else {
@@ -563,7 +563,7 @@ object DeviceStateUtils {
     @JvmStatic
     @JvmOverloads
     @WorkerThread
-    fun evaluateStartupState(
+    fun evaluateStartupStateWithContent(
         context: Context,
         shouldEnableTimingCheck: Boolean,
         minPlausibleCheckDurationMs: Long = 20L,

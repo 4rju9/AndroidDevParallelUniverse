@@ -72,7 +72,7 @@ You only consume the dimension you need. No galactic-scale imports. 🌌
 ## 🔭 Dimensional Directory
 
 | Dimension | Artifact | Description | Dependency |
-|---|---|---|---|
+|:---|:---|:---|:---:|
 | 🛡️ **Security Dimension** | `root-detection` | A multi-layered **C++/Kotlin security fortress** designed to detect rooted environments across multiple defensive layers. | [Navigate](#-security-dimension--root-detection) |
 | 🎡 **Motion Dimension** | `wheel-picker` | A **Jetpack Compose wheel picker** designed for smooth, frictionless dimensional scrolling. | [Navigate](#-motion-dimension--wheel-picker) |
 | 🌀 **Interface Dimension** | `animated-tab-layout` | A **dynamically calculating, ripple-free tab layout** that adapts its geometry instead of forcing developers to manually negotiate with pixels. | [Navigate](#-interface-dimension--animated-tab-layout) |

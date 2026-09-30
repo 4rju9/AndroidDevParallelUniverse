@@ -1,9 +1,9 @@
 package app.netlify.dev4rju9.androiddevparalleluniverse.previews.rootdetection
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,9 +12,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -34,6 +32,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RootDetectionScreen(
+    modifier: Modifier = Modifier,
     viewModel: RootDetectionViewModel
 ) {
     val scope = rememberCoroutineScope()
@@ -41,148 +40,137 @@ fun RootDetectionScreen(
     val applicationContext = context.applicationContext
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        containerColor = MaterialTheme.colorScheme.background,
-        topBar = {
-            TopAppBar(
-                modifier = Modifier.fillMaxWidth(),
-                title = {
-                    Text(
-                        text = "Root Detection",
-                        color = MaterialTheme.colorScheme.onBackground,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
+    LazyColumn(
+        modifier = modifier
+            .background(MaterialTheme.colorScheme.background)
+            .padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(
+            16.dp,
+            alignment = Alignment.Top
+        ),
+        horizontalAlignment = Alignment.Start
+    ) {
+
+        item {
+            Text(
+                text = "Root Detection",
+                color = MaterialTheme.colorScheme.onBackground,
+                fontWeight = FontWeight.Bold
             )
         }
-    ) { innerPadding ->
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(
-                16.dp,
-                alignment = Alignment.Top
-            ),
-            horizontalAlignment = Alignment.Start
-        ) {
+        item {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(
+                    8.dp,
+                    alignment = Alignment.Start
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Status :- ",
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontWeight = FontWeight.Bold
+                )
 
-            item {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(
-                        8.dp,
-                        alignment = Alignment.Start
-                    ),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Status :- ",
-                        color = MaterialTheme.colorScheme.onBackground,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                    Text(
-                        text = uiState.status,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        fontStyle = FontStyle.Italic
-                    )
-                }
+                Text(
+                    text = uiState.status,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontStyle = FontStyle.Italic
+                )
             }
+        }
 
-            item {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(
-                        8.dp,
-                        alignment = Alignment.Start
-                    ),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+        item {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(
+                    8.dp,
+                    alignment = Alignment.Start
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
 
-                    Button(
-                        enabled = !uiState.loading,
-                        onClick = {
-                            scope.launch(Dispatchers.IO) {
+                Button(
+                    enabled = !uiState.loading,
+                    onClick = {
+                        scope.launch(Dispatchers.IO) {
 
-                                viewModel.setLoading()
+                            viewModel.setLoading()
 
-                                val result = DeviceStateUtils.evaluateStartupStateWithContent(
-                                    context = applicationContext,
-                                    shouldEnableTimingCheck = true
-                                ) {
-                                    scope.launch(Dispatchers.Main) { Toast.makeText(context, "Device is safe !", Toast.LENGTH_SHORT).show() }
-                                }
-
-                                viewModel.updateResult(result)
+                            val result = DeviceStateUtils.evaluateStartupStateWithContent(
+                                context = applicationContext,
+                                shouldEnableTimingCheck = true
+                            ) {
+                                scope.launch(Dispatchers.Main) { Toast.makeText(context, "Device is safe !", Toast.LENGTH_SHORT).show() }
                             }
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.primary,
-                            contentColor = MaterialTheme.colorScheme.onPrimary
-                        )
-                    ) {
-                        Text(
-                            text = if (uiState.loading) {
-                                "Checking..."
-                            } else {
-                                "Start"
-                            },
-                            color = MaterialTheme.colorScheme.onPrimary,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
 
-                    Button(
-                        onClick = viewModel::clear,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.primary,
-                            contentColor = MaterialTheme.colorScheme.onPrimary
-                        )
-                    ) {
-                        Text(
-                            text = "Clear",
-                            color = MaterialTheme.colorScheme.onPrimary,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-            }
-
-            if (uiState.elapsedMs > 0) {
-                item {
-                    Text(
-                        text = "Elapsed Time :- ${uiState.elapsedMs} ms",
-                        color = MaterialTheme.colorScheme.onBackground,
-                        fontStyle = FontStyle.Italic
+                            viewModel.updateResult(result)
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
                     )
-                }
-            }
-
-            itemsIndexed(uiState.flags) { index, flag ->
-
-                if (index == 0) {
+                ) {
                     Text(
-                        text = "Signals",
-                        color = MaterialTheme.colorScheme.onBackground,
+                        text = if (uiState.loading) {
+                            "Checking..."
+                        } else {
+                            "Start"
+                        },
+                        color = MaterialTheme.colorScheme.onPrimary,
                         fontWeight = FontWeight.Bold
                     )
+                }
 
-                    Text(
-                        text = flag,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        fontStyle = FontStyle.Italic
+                Button(
+                    onClick = viewModel::clear,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
                     )
-                } else {
+                ) {
                     Text(
-                        text = flag,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        fontStyle = FontStyle.Italic
+                        text = "Clear",
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        fontWeight = FontWeight.Bold
                     )
                 }
+            }
+        }
+
+        if (uiState.elapsedMs > 0) {
+            item {
+                Text(
+                    text = "Elapsed Time :- ${uiState.elapsedMs} ms",
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontStyle = FontStyle.Italic
+                )
+            }
+        }
+
+        itemsIndexed(uiState.flags) { index, flag ->
+
+            if (index == 0) {
+                Text(
+                    text = "Signals",
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Text(
+                    text = flag,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontStyle = FontStyle.Italic
+                )
+            } else {
+                Text(
+                    text = flag,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontStyle = FontStyle.Italic
+                )
             }
         }
     }
@@ -194,6 +182,6 @@ fun RootDetectionScreen(
 fun RootDetectionPreview() {
     AndroidDevParallelUniverseTheme {
         val viewModel = RootDetectionViewModel()
-        RootDetectionScreen(viewModel)
+        RootDetectionScreen(viewModel = viewModel)
     }
 }

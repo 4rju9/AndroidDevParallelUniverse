@@ -99,7 +99,7 @@ dependencies {
 
 ### 🎬 Demo
 
-![Root Detection Demo](https://img.itch.zone/aW1nLzEyNTkzNzU0LmdpZg==/original/FCoH%2F2.gif)
+![Root Detection Demo](docs/gifs/root-detection.gif)
 
 ### 🚀 Usage
 
@@ -303,7 +303,7 @@ The module provides a reusable **Compose-native wheel selection experience** wit
 
 ### 🎞️ Demo
 
-![Demo](https://img.itch.zone/aW1nLzEyNTkzNzU0LmdpZg==/original/FCoH%2F2.gif)
+![Demo](docs/gifs/wheel-picker.gif)
 
 ### 🚀 Usage
 
@@ -441,7 +441,7 @@ The layout calculates its visual geometry dynamically instead of forcing consume
 
 ### 🎞️ Demo
 
-![Demo](https://img.itch.zone/aW1nLzEyNTkzNzU0LmdpZg==/original/FCoH%2F2.gif)
+![Demo](docs/gifs/animated-tab-layout.gif)
 
 ### 🚀 Usage
 

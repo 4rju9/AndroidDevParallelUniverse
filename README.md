@@ -289,7 +289,9 @@ The startup evaluation additionally combines multiple independent paths to make 
 
 ## 🎡 Motion Dimension — `wheel-picker`
 
-A reusable **Jetpack Compose wheel picker** designed for smooth, dimensional scrolling.
+A reusable **generic Jetpack Compose wheel picker** designed for smooth, dimensional scrolling with fully customizable item, label, and divider content.
+
+### 📦 Installation
 
 Add the dependency:
 
@@ -297,7 +299,7 @@ Add the dependency:
 dependencies {
     implementation("com.github.4rju9.AndroidDevParallelUniverse:wheel-picker:1.0.3")
 }
-```
+````
 
 The module provides a reusable **Compose-native wheel selection experience** without requiring a legacy View-based implementation.
 
@@ -307,17 +309,16 @@ The module provides a reusable **Compose-native wheel selection experience** wit
 
 ### 🚀 Usage
 
-`WheelPicker` accepts a list of items and reports the currently selected item through `onItemSelected`.
+`WheelPicker` is generic and accepts a `List<T>`. Instead of assuming that items are `String`s, the caller controls how each item is rendered through `itemContent`.
+
+The selected item is reported through `onItemSelected`.
 
 #### Basic Picker
 
 ```kotlin
 @Composable
 fun NumberPicker() {
-    val numbers = listOf(
-        "1", "2", "3", "4", "5",
-        "6", "7", "8", "9", "10"
-    )
+    val numbers = (1..10).toList()
 
     var selectedNumber by remember {
         mutableStateOf(numbers.first())
@@ -325,8 +326,17 @@ fun NumberPicker() {
 
     WheelPicker(
         items = numbers,
-        selectedTextColor = Color.White,
-        unselectedTextColor = Color.Gray,
+        itemContent = { item, isSelected ->
+            Text(
+                text = item.toString(),
+                fontSize = if (isSelected) 25.sp else 20.sp,
+                color = if (isSelected) {
+                    Color.White
+                } else {
+                    Color.Gray
+                }
+            )
+        },
         onItemSelected = { _, item ->
             selectedNumber = item
         }
@@ -334,30 +344,147 @@ fun NumberPicker() {
 }
 ```
 
-#### Picker with Label & Dividers
+#### Picker with Custom Label
 
-The picker can be customized with a label, selection dividers, item sizing, and the number of visible items.
+Labels are now provided through `labelContent`, allowing the label to contain any composable UI rather than being limited to a `String`.
 
 ```kotlin
 @Composable
 fun AgePicker() {
-    val ages = (18..60).map { it.toString() }
+    val ages = 18..60
 
     WheelPicker(
-        items = ages,
-        selectedTextColor = Color.White,
-        unselectedTextColor = Color.Gray,
-        selectedTextSize = 28.sp,
-        unselectedTextSize = 20.sp,
+        items = ages.toList(),
         itemHeight = 44.dp,
         visibleItemsCount = 5,
+        itemContent = { age, isSelected ->
+            Text(
+                text = age.toString(),
+                fontSize = if (isSelected) 28.sp else 20.sp,
+                color = if (isSelected) {
+                    Color.White
+                } else {
+                    Color.Gray
+                }
+            )
+        },
+        labelContent = {
+            Text(
+                text = "years",
+                color = Color.White.copy(alpha = 0.5f),
+                fontSize = 20.sp
+            )
+        },
+        onItemSelected = { index, age ->
+            println("Selected age: $age at index $index")
+        }
+    )
+}
+```
+
+#### Custom Divider
+
+The selection area can be completely customized using the `divider` composable slot.
+
+```kotlin
+@Composable
+fun CustomDividerPicker() {
+    val months = listOf(
+        "Jan", "Feb", "Mar", "Apr",
+        "May", "Jun", "Jul", "Aug",
+        "Sep", "Oct", "Nov", "Dec"
+    )
+
+    WheelPicker(
+        items = months,
+        itemContent = { month, isSelected ->
+            Text(
+                text = month,
+                fontSize = if (isSelected) 25.sp else 20.sp,
+                color = if (isSelected) {
+                    Color.White
+                } else {
+                    Color.DarkGray
+                }
+            )
+        },
         enableDivider = true,
-        dividerColor = Color.Cyan,
-        dividerWidth = 80.dp,
-        label = "years",
-        labelColor = Color.White.copy(alpha = 0.5f),
-        onItemSelected = { index, item ->
-            println("Selected age: $item at index $index")
+        dividerWidth = 70.dp,
+        divider = {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .fillMaxWidth()
+                    .height(34.dp)
+                    .clip(CircleShape)
+                    .background(Color.Cyan.copy(alpha = 0.2f))
+                    .border(
+                        width = 1.dp,
+                        color = Color.Cyan,
+                        shape = CircleShape
+                    )
+            )
+        },
+        onItemSelected = { _, _ -> }
+    )
+}
+```
+
+The divider slot is a `BoxScope` composable, so it can use `align()` and layer itself directly over the wheel content.
+
+#### Generic Item Types
+
+`WheelPicker` is not restricted to strings. Any data type can be used as the item type.
+
+```kotlin
+data class UnitOption(
+    val value: Int,
+    val unit: String
+)
+
+@Composable
+fun UnitPicker() {
+    val units = listOf(
+        UnitOption(1, "kg"),
+        UnitOption(2, "kg"),
+        UnitOption(3, "kg"),
+        UnitOption(4, "kg"),
+        UnitOption(5, "kg")
+    )
+
+    WheelPicker(
+        items = units,
+        itemContent = { item, isSelected ->
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = item.value.toString(),
+                    fontSize = if (isSelected) 28.sp else 20.sp,
+                    color = if (isSelected) {
+                        Color.White
+                    } else {
+                        Color.Gray
+                    }
+                )
+
+                Spacer(Modifier.width(4.dp))
+
+                Text(
+                    text = item.unit,
+                    fontSize = 14.sp,
+                    color = Color.Gray
+                )
+            }
+        },
+        labelContent = {
+            Text(
+                text = "weight",
+                color = Color.Cyan.copy(alpha = 0.4f)
+            )
+        },
+        onItemSelected = { _, item ->
+            println("Selected: ${item.value} ${item.unit}")
         }
     )
 }
@@ -384,8 +511,17 @@ fun MonthPicker() {
     WheelPicker(
         items = months,
         initialIndex = 5,
-        selectedTextColor = Color.White,
-        unselectedTextColor = Color.Gray,
+        itemContent = { month, isSelected ->
+            Text(
+                text = month,
+                fontSize = if (isSelected) 25.sp else 20.sp,
+                color = if (isSelected) {
+                    Color.White
+                } else {
+                    Color.Gray
+                }
+            )
+        },
         visibleItemsCount = 3,
         onItemSelected = { _, month ->
             selectedMonth = month
@@ -398,15 +534,17 @@ fun MonthPicker() {
 
 ### ⚙️ Customization
 
-`WheelPicker` exposes configuration for both appearance and interaction:
+`WheelPicker` exposes configuration for layout, item rendering, dividers, labels, and interaction:
 
-| Category     | Options                                                                                            |
-| ------------ | -------------------------------------------------------------------------------------------------- |
-| Selection    | `initialIndex`, `onItemSelected`                                                                   |
-| Item Styling | `itemHeight`, `selectedTextColor`, `unselectedTextColor`, `selectedTextSize`, `unselectedTextSize` |
-| Dividers     | `enableDivider`, `dividerColor`, `dividerThickness`, `dividerWidth`, `dividerSpacingMultiplier`    |
-| Label        | `label`, `labelColor`, `labelSize`                                                                 |
-| Behavior     | `visibleItemsCount`, `enabled`                                                                     |
+| Category    | Options                                                                |
+| ----------- | ---------------------------------------------------------------------- |
+| Selection   | `initialIndex`, `onItemSelected`                                       |
+| Items       | `items`, generic item type `T`                                         |
+| Item Layout | `itemHeight`, `itemContent`                                            |
+| Dividers    | `enableDivider`, `dividerWidth`, `dividerSpacingMultiplier`, `divider` |
+| Label       | `labelContent`                                                         |
+| Behavior    | `visibleItemsCount`, `enabled`                                         |
+| Layout      | `modifier`                                                             |
 
 ### 🌀 Compose-Native Design
 
@@ -416,12 +554,18 @@ The picker is built entirely with Compose primitives and uses snapping behavior 
 * Snap fling behavior for item alignment
 * Automatic selected-item detection
 * Configurable visible item count
-* Optional selection dividers
-* Optional labels
-* Fully customizable text styling
+* Generic item support through `T`
+* Fully customizable item composables
+* Fully customizable selection divider
+* Fully customizable label content
+* Optional selection divider
+* Optional label content
 * Callback-based selection updates
 
-> **Note:** `WheelPicker` should be used from a `@Composable` context, and `onItemSelected` is invoked whenever the centered item changes.
+> **Note:** `WheelPicker` should be used from a `@Composable` context. `onItemSelected` is invoked whenever the centered item changes.
+```
+This removes the old `selectedTextColor`, `unselectedTextColor`, `selectedTextSize`, `unselectedTextSize`, `dividerColor`, `dividerThickness`, `label`, `labelColor`, and `labelSize` API from the documentation because those responsibilities now belong to the caller's composable slots.
+```
 
 ---
 

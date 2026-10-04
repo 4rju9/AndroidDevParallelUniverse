@@ -52,6 +52,6 @@ dependencies {
     implementation(libs.androidx.compose.material3)
 }
 
-version = project.property("ANIMATED_TAB_LAYOUT_VERSION").toString()
+version = project.property("LIBRARY_TAG").toString()
 extra["ARTIFACT_ID"] = project.property("ANIMATED_TAB_LAYOUT").toString()
 apply(from = "${rootProject.projectDir}/publish-module.gradle.kts")

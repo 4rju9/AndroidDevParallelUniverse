@@ -77,6 +77,6 @@ dependencies {
     implementation(libs.androidx.annotation)
 }
 
-version = project.property("ROOT_DETECTION_VERSION").toString()
+version = project.property("LIBRARY_TAG").toString()
 extra["ARTIFACT_ID"] = project.property("ROOT_DETECTION").toString()
 apply(from = "${rootProject.projectDir}/publish-module.gradle.kts")

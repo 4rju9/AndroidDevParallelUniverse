@@ -50,6 +50,6 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
 }
 
-version = project.property("WHEEL_PICKER_VERSION").toString()
+version = project.property("LIBRARY_TAG").toString()
 extra["ARTIFACT_ID"] = project.property("WHEEL_PICKER").toString()
 apply(from = "${rootProject.projectDir}/publish-module.gradle.kts")
